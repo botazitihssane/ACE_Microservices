@@ -1,0 +1,127 @@
+version: '3'
+
+services:
+  # Eureka Service
+  eureka-server:
+    build:
+      context: ./Back_Blog/Eureka-Server
+    ports:
+      - "8761:8761"
+    networks:
+      - n3
+
+  # Gateway Service
+  gateway-service:
+    build:
+      context: ./Back_Blog/Gateway
+    ports:
+      - "8888:8888"
+    depends_on:
+      - eureka-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    networks:
+      - n3
+
+  # MySQL Utilisateur
+  mysql-utilisateur:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: service-utilisateur
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    networks:
+      - n3
+
+  # MySQL Article
+  mysql-article:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: service-article
+      MYSQL_PASSWORD: root
+    ports:
+      - "3307:3306"
+    networks:
+      - n3
+
+  # Utilisateur Service
+  utilisateur-service:
+    build:
+      context: ./Back_Blog/Utilisateur
+    ports:
+      - "8088:8088"
+    depends_on:
+      - eureka-server
+      - mysql-utilisateur
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-utilisateur:3306/service-utilisateur
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 5s
+      timeout: 2s
+      retries: 100
+    networks:
+      - n3
+
+  # Article Service
+  article-service:
+    build:
+      context: ./Back_Blog/Article
+    ports:
+      - "8089:8089"
+    depends_on:
+      - eureka-server
+      - mysql-article
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-article:3306/service-article
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 5s
+      timeout: 2s
+      retries: 100
+    networks:
+      - n3
+
+  frontend:
+    build:
+      context: ./Front_Blog
+    ports:
+      - "3000:80"
+    depends_on:
+      - article-service
+      - utilisateur-service
+
+  phpmyadmin-utilisateur:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql-utilisateur
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8082:80"
+    networks:
+      - n3
+
+  phpmyadmin-article:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql-article
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8083:80"
+    networks:
+      - n3
+
+networks:
+  n3:
+    external: true

@@ -205,7 +205,7 @@ function ArticleDetail() {
                       <div className="flex-shrink-0"></div>
                       <div className="ms-3">
                         <div className="fw-bold">
-                          {comment.visiteur.nom || "Anonymous"}
+                          {comment.visiteur?.nom || "Anonymous"}
                         </div>
                         <div>{comment.texte}</div>
                         <div className="mt-2">
