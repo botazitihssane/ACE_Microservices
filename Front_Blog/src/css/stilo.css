@@ -1,0 +1,10 @@
+/* stilo.css */
+
+.sticky-footer {
+    position: sticky;
+    bottom: 0;
+    background-color: #343a40; /* Set your desired background color */
+    color: white; /* Set your desired text color */
+    padding: 10px; /* Add padding for better visibility */
+  }
+  
