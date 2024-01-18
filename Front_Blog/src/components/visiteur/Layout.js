@@ -15,14 +15,10 @@ function Layout() {
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item"><a className="nav-link" href="#">Home</a></li>
                         <li className="nav-item"><a className="nav-link" href="#!">About</a></li>
-                        <li className="nav-item"><a className="nav-link" href="#!">Contact</a></li>
+                        <li className="nav-item"><Link to="/signin" className="nav-link">Se connecter</Link></li>
                         <li className="nav-item"><a className="nav-link active" aria-current="page" href="#">Blog</a>
                         </li>
-                        <li className="nav-item">
-                            <Link to="/signin" className="nav-link active" >
-                                Se connecter en tant que propriétaire
-                            </Link>
-                        </li>
+
                     </ul>
                 </div>
             </div>
