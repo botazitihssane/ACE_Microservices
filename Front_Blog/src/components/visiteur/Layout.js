@@ -2,6 +2,7 @@ import React from "react";
 
 import styles from "../../css/styles.css";
 import Footer from "./Footer";
+import { Link } from 'react-router-dom';
 
 function Layout() {
   return (
@@ -12,16 +13,22 @@ function Layout() {
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
+                        <li className="nav-item"><a className="nav-link" href="#">Home</a></li>
+                        <li className="nav-item"><a className="nav-link" href="#!">About</a></li>
+                        <li className="nav-item"><a className="nav-link" href="#!">Contact</a></li>
+                        <li className="nav-item"><a className="nav-link active" aria-current="page" href="#">Blog</a>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/signin" className="nav-link active" >
+                                Se connecter en tant que propriétaire
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </div>
-        </nav>
+     </nav>
 
-        
+
     </>
   );
 }
