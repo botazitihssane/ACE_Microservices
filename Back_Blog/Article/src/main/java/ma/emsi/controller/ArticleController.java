@@ -27,8 +27,9 @@ public class ArticleController {
 
 	@GetMapping
 	public String hello(){
-		return "Test deploiement automatique";
+		return "Test deploiement automatique      ";
 	}
+
 
 	@PostMapping(value = "/article", produces = { "application/json", "application/xml" }, consumes = {
 			"application/json", "application/xml" })
