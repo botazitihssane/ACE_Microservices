@@ -18,7 +18,6 @@ function Layout() {
                         <li className="nav-item"><Link to="/signin" className="nav-link">Se connecter</Link></li>
                         <li className="nav-item"><a className="nav-link active" aria-current="page" href="#">Blog</a>
                         </li>
-
                     </ul>
                 </div>
             </div>
