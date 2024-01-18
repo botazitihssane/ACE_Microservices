@@ -25,6 +25,11 @@ public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
 
+	@GetMapping
+	public String hello(){
+		return "Test deploiement automatique";
+	}
+	
 	@PostMapping(value = "/article", produces = { "application/json", "application/xml" }, consumes = {
 			"application/json", "application/xml" })
 	public ResponseEntity<Void> add(@RequestBody Article p) {
